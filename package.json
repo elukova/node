@@ -1,0 +1,19 @@
+{
+  "name": "lena",
+  "version": "1.0.0",
+  "description": "hw node gb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elukova/node.git"
+  },
+  "author": "lena (e_l_e_n_24@mail.ru)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elukova/node/issues"
+  },
+  "homepage": "https://github.com/elukova/node#readme"
+}

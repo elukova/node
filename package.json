@@ -4,16 +4,20 @@
   "description": "hw node gb",
   "main": "index.js",
   "scripts": {
+    "dev": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elukova/node.git"
+    "url": "git+https://github.com/elukova/node-lena.git"
   },
   "author": "lena (e_l_e_n_24@mail.ru)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/elukova/node/issues"
+    "url": "https://github.com/elukova/node-lena/issues"
   },
-  "homepage": "https://github.com/elukova/node#readme"
+  "homepage": "https://github.com/elukova/node-lena#readme",
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
 }

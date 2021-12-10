@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/elukova/node-lena#readme",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "date-fns": "^2.27.0"
   }
 }

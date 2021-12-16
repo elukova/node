@@ -1,31 +1,23 @@
-const colors = require("colors/safe");
+const fs = require("fs");
+const ACCESS_LOG = "./accessMini.log";
 
-let [, , rangeStart, rangeEnd] = process.argv;
+const readStream = fs.createReadStream(ACCESS_LOG, {
+  encoding: "utf-8",
+  highWaterMark: 128,
+});
+const writeStream1 = fs.createWriteStream("./89.123.1.41_requests.log");
+const writeStream2 = fs.createWriteStream("./34.48.240.111_requests.log");
 
-if (rangeStart != +rangeStart || rangeEnd != +rangeEnd) {
-  console.log(colors.inverse.red("Not a number"));
-} else {
-  let primeNumbers = [];
+let prevChunkTail = "";
 
-  search: for (let i = +rangeStart; i <= rangeEnd; i++) {
-    if (i == 1) continue search;
-    for (let j = 2; j < i; j++) {
-      if (i % j == 0) continue search;
-    }
-    primeNumbers.push(i);
+readStream.on("data", (chunk) => {
+  checkLine = prevChunkTail + chunk.toString();
+
+  if (checkLine.includes("89.123.1.41")) {
+    writeStream1.write(checkLine + "\n");
   }
-
-  if (primeNumbers.length == 0) {
-    console.log(colors.brightMagenta("There are no prime numbers here"));
-  } else {
-    for (let i = 0; i < primeNumbers.length; i += 3) {
-      console.log(colors.green(primeNumbers[i]));
-      if (primeNumbers[i + 1] != undefined) {
-        console.log(colors.yellow(primeNumbers[i + 1]));
-      }
-      if (primeNumbers[i + 2] != undefined) {
-        console.log(colors.red(primeNumbers[i + 2]));
-      }
-    }
+  if (checkLine.includes("34.48.240.111")) {
+    writeStream2.write(checkLine + "\n");
   }
-}
+  prevChunkTail = chunk.toString().slice(-12);
+});

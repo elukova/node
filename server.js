@@ -4,7 +4,7 @@ const path = require(`path`);
 
 // const numCPUs = os.cpus().length;
 
-async () => {
+(async () => {
   const isFile = (path) => fs.lstatSync(path).isFile();
 
   http
@@ -24,21 +24,29 @@ async () => {
       if (urlParams) {
         urlParams.pop();
         const prevUrl = urlParams.join(`/`);
-        linksList = urlParams.length ? (
-          <li>
-            <a href="/${prevUrl}">..</a>
-          </li>
-        ) : (
-          <li>
-            <a href="/">..</a>
-          </li>
-        );
+        linksList = urlParams.length
+          ? `<li>
+              <a href="/${prevUrl}">..</a>
+            </li>`
+          : `<li>
+              <a href="/">..</a>
+            </li>`;
       }
 
-      console.log(`Метод запроса: ${request.method}`);
-      console.log(`Заголовки запроса: \n${JSON.stringify(request.headers)}\n`);
+      fs.readdirSync(fullPath).forEach((fileName) => {
+        const filePath = path.join(request.url, fileName);
+        linksList += `<li>
+            <a href="${filePath}">${fileName}</a>
+          </li>`;
+      });
 
-      response.end(`Hello, world!`);
+      const HTML = fs
+        .readFileSync(path.join(__dirname, `index.html`), "utf-8")
+        .replace(`##links`, linksList);
+
+      response.writeHead(200, { "Content-Type": "text/html" });
+
+      return response.end(HTML);
     })
-    .listen(3000, `localhost`);
-};
+    .listen(5555, `localhost`);
+})();
